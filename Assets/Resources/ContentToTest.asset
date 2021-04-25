@@ -19,3 +19,15 @@ MonoBehaviour:
   - '[UTILITIES]'
   - '[TESTING_OBJECTS]'
   - '[HAZARD_OBJECTS]'
+  - '[TESTING_TIMELINE_AND_INFRACTIONS]'
+  - '[TIMELINES_PARENT]'
+  - MasterTimeline
+  - ShimTimeline
+  - SubTimelines
+  - Testing_BaseContent
+  - OtherTestingTimeline
+  - InfractionTimelines
+  - Infraction_1_Parent
+  - Infraction_1_Timeline
+  - Infraction_2_Parent
+  - Infraction_2_Timeline

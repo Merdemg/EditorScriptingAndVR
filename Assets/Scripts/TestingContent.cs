@@ -82,7 +82,7 @@ public class TestingContent : EditorWindow
                     }else
                     {
                         Debug.Log(contentToTest.content[i] + "not found");
-                        if (EditorUtility.DisplayDialog(contentToTest.content[i] + "not found.",contentToTest.content[i] + "not found. Create it?", "Yes", "No"))
+                        if (EditorUtility.DisplayDialog(contentToTest.content[i] + " not found.",contentToTest.content[i] + " not found. Create it?", "Yes", "No"))
                         {
                             new GameObject(contentToTest.content[i]);
                             checkedStatus[i] = CheckedStatus.Found;
