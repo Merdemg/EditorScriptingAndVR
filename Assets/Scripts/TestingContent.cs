@@ -1,9 +1,21 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
 public class TestingContent : EditorWindow
 {
     ContentToTest contentToTest = null;
+    Texture2D greenIcon = null;
+    Texture2D redIcon = null;
+
+    enum CheckedStatus
+    {
+        Unchecked,
+        Found,
+        NotFound
+    }
+
+    List<CheckedStatus> checkedStatus = new List<CheckedStatus>();
 
     [MenuItem("Window/TestingContent")]
     public static void ShowWindow(){
@@ -12,17 +24,41 @@ public class TestingContent : EditorWindow
 
     void OnEnable(){
         contentToTest = Resources.Load<ContentToTest>("ContentToTest");
+        greenIcon = Resources.Load<Texture2D>("greenIcon");
+        redIcon = Resources.Load<Texture2D>("redIcon");
+
+        checkedStatus = new List<CheckedStatus>();
+
+        foreach (string item in contentToTest.content)
+        {
+            checkedStatus.Add(CheckedStatus.Unchecked);
+            Debug.Log("sTATUS ADDED");
+        }
     }
 
     void OnGUI(){
         if (contentToTest != null)
         {
-            foreach (string item in contentToTest.content)
-            {
-
+            for (int i = 0; i < contentToTest.content.Count; i++)
+            {              
                 GUILayout.BeginHorizontal();
 
-                GUILayout.Label(item);
+                GUILayout.Label(contentToTest.content[i]);
+
+
+                switch (checkedStatus[i])
+                {
+                    case CheckedStatus.Found:
+                    GUILayout.Label(greenIcon, GUILayout.MaxHeight(10));
+                    break;
+                    case CheckedStatus.NotFound:
+                    GUILayout.Label(redIcon, GUILayout.MaxHeight(10));
+                    break;
+                    case CheckedStatus.Unchecked:
+                    //Maybe draw a question mark icon?
+                    break;
+                }
+                
                 GUILayout.FlexibleSpace();
 
                 if (GUILayout.Button("VALIDATE", EditorStyles.miniButtonRight))
@@ -32,7 +68,7 @@ public class TestingContent : EditorWindow
 
                     foreach (GameObject obj in AllObjects)
                     {
-                        if (obj.name == item)
+                        if (obj.name == contentToTest.content[i])
                         {
                             IsFound = true;
                             break;
@@ -41,15 +77,19 @@ public class TestingContent : EditorWindow
 
                     if (IsFound)
                     {
-                        Debug.Log(item + "is found");
+                        Debug.Log(contentToTest.content[i] + "is found");
+                        checkedStatus[i] = CheckedStatus.Found;
                     }else
                     {
-                        Debug.Log(item + "not found");
-                        if (EditorUtility.DisplayDialog(item + "not found.",item + "not found. Create it?", "Yes", "No"))
+                        Debug.Log(contentToTest.content[i] + "not found");
+                        if (EditorUtility.DisplayDialog(contentToTest.content[i] + "not found.",contentToTest.content[i] + "not found. Create it?", "Yes", "No"))
                         {
-                            new GameObject(item);
-                        }
-                        
+                            new GameObject(contentToTest.content[i]);
+                            checkedStatus[i] = CheckedStatus.Found;
+                        }else
+                        {
+                            checkedStatus[i] = CheckedStatus.NotFound;
+                        }                       
                     }
                 }
                 GUILayout.EndHorizontal();
