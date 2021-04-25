@@ -32,7 +32,6 @@ public class TestingContent : EditorWindow
         foreach (string item in contentToTest.content)
         {
             checkedStatus.Add(CheckedStatus.Unchecked);
-            Debug.Log("sTATUS ADDED");
         }
     }
 
@@ -43,11 +42,11 @@ public class TestingContent : EditorWindow
             {              
                 GUILayout.BeginHorizontal();
 
-                GUILayout.Label(contentToTest.content[i]);
+                GUILayout.Label(contentToTest.content[i]); // Write the name of the game object
 
 
                 switch (checkedStatus[i])
-                {
+                {   // Draw the icon
                     case CheckedStatus.Found:
                     GUILayout.Label(greenIcon, GUILayout.MaxHeight(10));
                     break;
@@ -64,8 +63,8 @@ public class TestingContent : EditorWindow
                 if (GUILayout.Button("VALIDATE", EditorStyles.miniButtonRight))
                 {
                     GameObject[] AllObjects = FindObjectsOfType<GameObject>();
-                    bool IsFound = false;
 
+                    bool IsFound = false;
                     foreach (GameObject obj in AllObjects)
                     {
                         if (obj.name == contentToTest.content[i])
@@ -77,11 +76,9 @@ public class TestingContent : EditorWindow
 
                     if (IsFound)
                     {
-                        Debug.Log(contentToTest.content[i] + "is found");
                         checkedStatus[i] = CheckedStatus.Found;
                     }else
                     {
-                        Debug.Log(contentToTest.content[i] + "not found");
                         if (EditorUtility.DisplayDialog(contentToTest.content[i] + " not found.",contentToTest.content[i] + " not found. Create it?", "Yes", "No"))
                         {
                             new GameObject(contentToTest.content[i]);
@@ -96,7 +93,7 @@ public class TestingContent : EditorWindow
             }
         }else
         {
-            Debug.Log("No content to test");
+            Debug.LogWarning("No content to test");
         }
     }
 }
