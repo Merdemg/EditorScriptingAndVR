@@ -19,9 +19,13 @@ public class TestingContent : EditorWindow
         {
             foreach (string item in contentToTest.content)
             {
-                GUILayout.Label(item);
 
-                if (GUILayout.Button("VALIDATE"))
+                GUILayout.BeginHorizontal();
+
+                GUILayout.Label(item);
+                GUILayout.FlexibleSpace();
+
+                if (GUILayout.Button("VALIDATE", EditorStyles.miniButtonRight))
                 {
                     GameObject[] AllObjects = FindObjectsOfType<GameObject>();
                     bool IsFound = false;
@@ -48,6 +52,7 @@ public class TestingContent : EditorWindow
                         
                     }
                 }
+                GUILayout.EndHorizontal();
             }
         }else
         {
