@@ -1,6 +1,6 @@
 # EditorScriptingAndVR
 
-Unity 2-2-.2.1f1
+Unity 2020.2.1f1
 
 
 Go to Window -> TestingContent to see the custom editor window. It reads the list of game object names from a scriptable object, found in Resources/ContentToTest
